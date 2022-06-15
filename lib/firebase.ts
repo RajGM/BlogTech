@@ -23,11 +23,16 @@ const firebaseConfig:Config = {
     measurementId: "G-DKZS0E5WWS"
 };
 
+console.log("<===FIREBASE===>");
+console.log(firebase);
+
 if(!firebase.apps.length){
     firebase.initializeApp(firebaseConfig);
 }
 
 export const auth = firebase.auth();
+export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
 export const firestore = firebase.firestore();
 export const storage = firebase.storage();
 
