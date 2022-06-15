@@ -1,9 +1,12 @@
 import '../styles/globals.css'
 
-import {GetServerSideProps} from 'next/app';
+import Navbar from '../components/NavBar';
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (<>
+  <Navbar/>
+  <Component {...pageProps} />
+  </>)
 }
 
 export default MyApp
