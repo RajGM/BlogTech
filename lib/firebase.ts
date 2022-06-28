@@ -1,7 +1,7 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-import 'firebase/storage';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import 'firebase/compat/storage';
 
 interface Config {
     apiKey: string,
@@ -23,18 +23,18 @@ const firebaseConfig:Config = {
     measurementId: "G-DKZS0E5WWS"
 };
 
-console.log("<===FIREBASE===>");
-console.log(firebase);
-
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
+//FIX the firebase first then the rest will get done as well
 export const auth = firebase.auth();
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
 export const firestore = firebase.firestore();
 export const storage = firebase.storage();
+//TO HERE
+
 
 //Helper functions
 
