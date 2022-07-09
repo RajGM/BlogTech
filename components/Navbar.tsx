@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { userContext } from '../lib/context';
 import { useRouter } from 'next/router';
-import { auth } from '@lib/firebase';
-
+import { auth } from '../lib/firebase';
 
 import { useContext } from 'react';
 

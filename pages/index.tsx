@@ -10,9 +10,18 @@ import PostFeed from '../components/PostFeed'
 import { useState } from 'react'
 
 // Max post to query per page
-const LIMIT = 3;
+const LIMIT = 1;
 
 export async function getServerSideProps(context) {
+
+  let data = await firestore.collection('posts').get();
+  data = data.docs.map(doc => doc.data());
+
+  console.log(
+    "DATA:",data
+  );
+
+
   const postsQuery = firestore
     .collectionGroup('posts')
     .where('published', '==', true)
@@ -56,14 +65,14 @@ export default function Home(props) {
   };
 
   return (
-      <main>
-        <PostFeed posts={posts} admin={undefined} />
+    <main>
+      <PostFeed posts={posts} admin={undefined} />
 
-        {!loading && !postsEnd && <button onClick={getMorePosts}>Load more</button>}
+      {!loading && !postsEnd && <button onClick={getMorePosts}>Load more</button>}
 
-        <Loader show={loading} />
+      <Loader show={loading} />
 
-        {postsEnd && 'You have reached the end!'}
-      </main>
+      {postsEnd && 'You have reached the end!'}
+    </main>
   );
 }
