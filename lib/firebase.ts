@@ -35,6 +35,11 @@ export const firestore = firebase.firestore();
 export const storage = firebase.storage();
 //TO HERE
 
+export const fromMillis = firebase.firestore.Timestamp.fromMillis;
+export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
+export const STATE_CHANGED = firebase.storage.TaskEvent.STATE_CHANGED;
+
+
 //Helper functions
 
 export async function getUserWithUsername(username:string){
@@ -52,5 +57,3 @@ export function postToJSON(doc){
         updatedAt:data.updatedAt.toMillis()
     }
 }
-
-export const fromMillis = firebase.firestore.Timestamp.fromMillis;
