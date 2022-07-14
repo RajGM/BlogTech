@@ -15,7 +15,7 @@ import toast from 'react-hot-toast';
 
 export default function AdminPostsEdit({ }) {
   return (
-    <AuthCheck>
+    <AuthCheck >
       <PostManager />
     </AuthCheck>
   );
