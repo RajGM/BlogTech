@@ -1,3 +1,10 @@
+# BlogTech
+A platform focused for publishing blogs written in markdown formatting
+- Write and publish blogs with ease
+- Quick onboarding within 15 seconds
+- Build for performance 
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -32,3 +39,16 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Packages and libraries
+
+- [npm](https://www.npmjs.com/) - Node package manager.
+- [react](https://reactjs.org/) - A JavaScript library for building user interfaces.
+- [react-dom](https://www.npmjs.com/package/react-dom) - serves as the entry point to the DOM and server renderers for React.
+- [react-firebase-hooks](https://www.npmjs.com/package/react-firebase-hooks) - React Hooks can work to make integration with Firebase even more straightforward.
+- [react-hook-form](https://www.npmjs.com/package/react-hook-form) - Multiple features required for the forms.
+- [react-hot-toast](https://react-hot-toast.com/) - React notifications.
+- [react-markdown](https://www.npmjs.com/package/react-markdown) - React component to render markdown.
+- [lodash.debounce](https://www.npmjs.com/package/lodash.debounce) - Creates a debounced function that delays invoking func until after wait milliseconds have elapsed since the last time the debounced function was invoked.
+- [lodash.kebabcase](https://www.npmjs.com/package/lodash.kebabcase) - Naming convention to replaces the spaces between words with a dash.
+- [Firebase](https://firebase.google.com/docs) - Firebase for data storage and authentication.
