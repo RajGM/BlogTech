@@ -1,21 +1,19 @@
 import PostFeed from '@components/PostFeed';
 import Metatags from '@components/Metatags';
 import Loader from '@components/Loader';
-import { firestore, fromMillis, postToJSON } from '@lib/firebase';
-
+import { getFirestore, collectionGroup, where, orderBy, limit, getDocs, query } from '@firebase/firestore';
 import { useState } from 'react';
+import { postToJSON } from '@lib/firebase';
 
 // Max post to query per page
 const LIMIT = 10;
 
 export async function getServerSideProps(context) {
-  const postsQuery = firestore
-    .collectionGroup('posts')
-    .where('published', '==', true)
-    .orderBy('createdAt', 'desc')
-    .limit(LIMIT);
+  const db = getFirestore();
+  const postsQuery = query(collectionGroup(db, 'posts'), where('published', '==', true), orderBy('createdAt', 'desc'), limit(LIMIT));
 
-  const posts = (await postsQuery.get()).docs.map(postToJSON);
+  const querySnapshot = await getDocs(postsQuery);
+  const posts = querySnapshot.docs.map(doc => postToJSON(doc));
 
   return {
     props: { posts }, // will be passed to the page component as props
