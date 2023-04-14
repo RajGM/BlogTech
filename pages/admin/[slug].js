@@ -1,21 +1,20 @@
-import Metatags from "../../components/Metatags"
-import ImageUploader from "../../components/ImageUploader";
-import styles from '../../styles/Admin.module.css';
-import AuthCheck from '../../components/AuthCheck';
-import { firestore, auth, serverTimestamp } from '../../lib/firebase';
+import styles from '@styles/Admin.module.css';
+import AuthCheck from '@components/AuthCheck';
+import { firestore, auth, serverTimestamp } from '@lib/firebase';
+import ImageUploader from '@components/ImageUploader';
 
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { useDocumentData } from 'react-firebase-hooks/firestore';
+import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import { useForm } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
-export default function AdminPostsEdit({ }) {
+export default function AdminPostEdit(props) {
   return (
-    <AuthCheck >
+    <AuthCheck>
       <PostManager />
     </AuthCheck>
   );
@@ -28,7 +27,7 @@ function PostManager() {
   const { slug } = router.query;
 
   const postRef = firestore.collection('users').doc(auth.currentUser.uid).collection('posts').doc(slug);
-  const [post] = useDocumentData(postRef);
+  const [post] = useDocumentDataOnce(postRef);
 
   return (
     <main className={styles.container}>
@@ -47,7 +46,7 @@ function PostManager() {
             <Link href={`/${post.username}/${post.slug}`}>
               <button className="btn-blue">Live view</button>
             </Link>
-            <DeletePostButton postRef={postRef}/>
+            <DeletePostButton postRef={postRef} />
           </aside>
         </>
       )}
@@ -56,7 +55,7 @@ function PostManager() {
 }
 
 function PostForm({ defaultValues, postRef, preview }) {
-  const { register, handleSubmit, reset, watch, formState, errors } = useForm({ defaultValues, mode: 'onChange' });
+  const { register, errors, handleSubmit, formState, reset, watch } = useForm({ defaultValues, mode: 'onChange' });
 
   const { isValid, isDirty } = formState;
 
@@ -69,7 +68,7 @@ function PostForm({ defaultValues, postRef, preview }) {
 
     reset({ content, published });
 
-    toast.success('Post updated successfully!')
+    toast.success('Post updated successfully!');
   };
 
   return (
@@ -81,17 +80,25 @@ function PostForm({ defaultValues, postRef, preview }) {
       )}
 
       <div className={preview ? styles.hidden : styles.controls}>
+        <ImageUploader />
 
-        <ImageUploader/>
+        <textarea
+          name="content"
+          ref={register({
+            maxLength: { value: 20000, message: 'content is too long' },
+            minLength: { value: 10, message: 'content is too short' },
+            required: { value: true, message: 'content is required' },
+          })}
+        ></textarea>
 
-        <textarea name="content" {...register}></textarea>
+        {errors.content && <p className="text-danger">{errors.content.message}</p>}
 
         <fieldset>
-          <input className={styles.checkbox} name="published" type="checkbox" {...register} />
+          <input className={styles.checkbox} name="published" type="checkbox" ref={register} />
           <label>Published</label>
         </fieldset>
 
-        <button type="submit">
+        <button type="submit" className="btn-green" disabled={!isDirty || !isValid}>
           Save Changes
         </button>
       </div>

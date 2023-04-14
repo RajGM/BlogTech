@@ -1,27 +1,14 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import PostFeed from '@components/PostFeed';
+import Metatags from '@components/Metatags';
+import Loader from '@components/Loader';
+import { firestore, fromMillis, postToJSON } from '@lib/firebase';
 
-import Link from 'next/link'
-import Loader from '../components/Loader'
-import toast from 'react-hot-toast';
-import { firestore, postToJSON, fromMillis } from '../lib/firebase'
-import PostFeed from '../components/PostFeed'
-import { useState } from 'react'
+import { useState } from 'react';
 
 // Max post to query per page
-const LIMIT = 1;
+const LIMIT = 10;
 
 export async function getServerSideProps(context) {
-
-  let data = await firestore.collection('posts').get();
-  data = data.docs.map(doc => doc.data());
-
-  console.log(
-    "DATA:",data
-  );
-
-
   const postsQuery = firestore
     .collectionGroup('posts')
     .where('published', '==', true)
@@ -41,6 +28,7 @@ export default function Home(props) {
 
   const [postsEnd, setPostsEnd] = useState(false);
 
+  // Get next page in pagination query
   const getMorePosts = async () => {
     setLoading(true);
     const last = posts[posts.length - 1];
@@ -66,7 +54,14 @@ export default function Home(props) {
 
   return (
     <main>
-      <PostFeed posts={posts} admin={undefined} />
+      <Metatags title="Home Page" description="Get the latest posts on our site" />
+
+      <div className="card card-info">
+        <h2>FullStack Next and Firebase web app</h2>
+        <p>All types of rendering are implemented in  this project.</p>
+      </div>
+     
+      <PostFeed posts={posts} />
 
       {!loading && !postsEnd && <button onClick={getMorePosts}>Load more</button>}
 

@@ -1,8 +1,8 @@
-import styles from '../../styles/Admin.module.css';
-import AuthCheck from '../../components/AuthCheck';
-import PostFeed from '../../components/PostFeed';
-import { userContext } from '../../lib/context';
-import { firestore, auth, serverTimestamp } from '../../lib/firebase';
+import styles from '@styles/Admin.module.css';
+import AuthCheck from '@components/AuthCheck';
+import PostFeed from '@components/PostFeed';
+import { UserContext } from '@lib/context';
+import { firestore, auth, serverTimestamp } from '@lib/firebase';
 
 import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -39,7 +39,7 @@ function PostList() {
 
 function CreateNewPost() {
   const router = useRouter();
-  const { username } = useContext(userContext);
+  const { username } = useContext(UserContext);
   const [title, setTitle] = useState('');
 
   // Ensure slug is URL safe
@@ -69,11 +69,10 @@ function CreateNewPost() {
 
     await ref.set(data);
 
-    toast.success('Post created!')
+    toast.success('Post created!');
 
     // Imperative navigation after doc is set
     router.push(`/admin/${slug}`);
-
   };
 
   return (
